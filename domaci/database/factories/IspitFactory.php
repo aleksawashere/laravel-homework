@@ -14,7 +14,9 @@ class IspitFactory extends Factory
     public function definition()
     {
         return [
-
+            'predmet_id' => $this->faker->randomDigitNot(0),
+            'student_id' => $this->faker->randomDigitNot(0),
+            'Rezultat' => $this->faker->randomElement($array = array ('Polozio','Pao'))
         ];
     }
 }
