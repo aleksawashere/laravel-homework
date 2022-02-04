@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+ Route::resource('students', StudentController::class);
  Route::get('/students', [StudentController::class, 'getAllStudents']);
 
  Route::post('/students', [StudentController::class, 'addStudent']);
@@ -28,7 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  Route::delete('/students/{student}', [StudentController::class, 'deleteStudent']);
 
  Route::resource('ispits', IspitController::class);
- //Route::get('/ispits', [IspitController::class, 'getAllIspits']);
+ Route::get('/ispits', [IspitController::class, 'getAllIspits']);
 
 
  Route::post('/ispits', [IspitController::class, 'addIspit']);
