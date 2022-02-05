@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IspitController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\API\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,10 +28,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
  Route::delete('/students/{student}', [StudentController::class, 'deleteStudent']);
 
- Route::resource('ispits', IspitController::class);
- Route::get('/ispits', [IspitController::class, 'getAllIspits']);
+ Route::post('/register', [AuthController::class, 'register']);
+ Route::post('/login', [AuthController::class, 'login']);
 
- Route::post('/ispits', [IspitController::class, 'addIspit']);
+ Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function(Request $request) {
+        return auth()->user();
+    });
+     Route::resource('ispits', IspitController::class);
 
- Route::delete('/ispits/{ispit}', [IspitController::class, 'deleteIspit']);
+    Route::get('/ispits', [IspitController::class, 'getAllIspits']);
+    Route::post('/ispits', [IspitController::class, 'addIspit']);
+    Route::delete('/ispits/{ispit}', [IspitController::class, 'deleteIspit']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
 
+Route::resource('ispits', IspitController::class)->only(['getAllIspits']);
