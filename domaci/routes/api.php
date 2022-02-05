@@ -30,3 +30,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  Route::get('/ispits', [IspitController::class, 'getAllIspits']);
 
  Route::post('/ispits', [IspitController::class, 'addIspit']);
+
+ Route::delete('/ispits/{ispit}', [IspitController::class, 'deleteIspit']);
+
